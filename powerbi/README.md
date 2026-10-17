@@ -1,12 +1,11 @@
-# Building the GP Stock Insights report in Power BI (browser)
+# GP Stock Insights Power BI model
 
-Works at [app.powerbi.com](https://app.powerbi.com) with a Microsoft Fabric (free) account. No Windows needed.
+Nine tables in a star schema, a DAX measure library and three report pages.
 
-## 1. Upload the data
-1. Run `python -m gpstock.build --generate`. It writes `data/powerbi/GP_Stock_PowerBI.xlsx`.
-2. In Power BI, go to **My workspace → New item → Semantic model** (or **Upload**), choose the Excel file, and import all 9 tables.
+## 1. Data
+`python -m gpstock.build --generate` writes `data/powerbi/GP_Stock_PowerBI.xlsx`. Import it into Power BI as a semantic model (**New item → Semantic model → Excel**); all 9 tables load.
 
-## 2. Relationships (open the semantic model → **Open data model**)
+## 2. Relationships
 All one-to-many, single direction, from dimension to fact:
 
 | From (one) | To (many) |
@@ -16,11 +15,11 @@ All one-to-many, single direction, from dimension to fact:
 | DimSite[site_id] | FactMovement, FactDailyStock, FactRequest, FactBatch, ItemPerformance [site_id] |
 | DimStaff[user_id] | FactMovement[user_id] |
 
-Delete any relationship Power BI guessed between two fact tables.
+There are no relationships between fact tables.
 
 ## 3. Measures
-Select **FactMovement → New measure** and paste each measure from [`measures.dax`](measures.dax).
-Format money as **Currency (£)** and the `%` measures as **Percentage**.
+All measures are in [`measures.dax`](measures.dax) and live on **FactMovement**.
+Money is formatted as **Currency (£)** and the `%` measures as **Percentage**.
 
 ## 4. Report pages
 
@@ -41,4 +40,4 @@ Format money as **Currency (£)** and the `%` measures as **Percentage**.
 - Table: FactBatch filtered to expiry_status = "Expiring within 60 days" with item, site, batch_number,
   expiry_date, quantity_now, value_now_gbp (an expiry watch list)
 
-Keep one colour per category on every page, and save screenshots of each page into `docs/`.
+Each category keeps one colour on every page.

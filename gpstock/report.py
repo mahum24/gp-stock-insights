@@ -1,4 +1,4 @@
-"""A one-page HTML preview of the dashboard, for people without Power BI.
+"""The one-page HTML dashboard.
 
     python -m gpstock.report      # writes docs/index.html
 """

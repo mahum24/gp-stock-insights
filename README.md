@@ -10,9 +10,9 @@ workflow system I built that is in daily use at a GP practice. The data here is
 a generated year in **exactly the app's format** (same tables, fields and
 rules), so the same build runs on an export from the app.
 
-**[Open the dashboard preview](docs/index.html)** · Power BI build guide: [powerbi/README.md](powerbi/README.md)
+**[Open the dashboard](docs/index.html)** · Power BI model: [powerbi/README.md](powerbi/README.md)
 
-![Dashboard preview](docs/report.png)
+![Dashboard](docs/report.png)
 
 ## What it shows
 
@@ -29,7 +29,7 @@ rules), so the same build runs on an export from the app.
 ## How it works
 
 ```
-GP Inventory app export ──► DuckDB SQL star schema ──► checks ──► Power BI (Excel import) + HTML preview
+GP Inventory app export ──► DuckDB SQL star schema ──► checks ──► Power BI (Excel import) + HTML dashboard
  sites, categories, items,      dim_date, dim_site,        stock reconciles      DAX measure library,
  site stock, movements,         dim_item, dim_staff,       to the app, batches   3-page report guide
  batches, requests, users       fact_movement,             add up, transfers
@@ -40,7 +40,7 @@ GP Inventory app export ──► DuckDB SQL star schema ──► checks ──
 - **`gpstock/generate.py`** simulates the year day by day with the app's own rules: stock is used earliest-expiry-first, expired stock is never used and is disposed of at the weekly check, low stock triggers a request that a manager approves before the delivery arrives as a new batch, and a site that runs out can borrow from the other site.
 - **`gpstock/sql/model.sql`** builds the star schema. The key table, `fact_daily_stock`, rebuilds closing stock for every item, at every site, on every day as a running total of its movements (a window function over a date spine). That is what makes "days out of stock" and "days below reorder level" possible, which the app itself does not store.
 - **`gpstock/build.py`** runs five data checks before anything is exported. The most important one: the stock rebuilt from a year of movements must equal the app's current stock, item by item.
-- **`powerbi/`** has the DAX measures (spend, waste %, availability %, stockout days, approval time, value expiring) and a step-by-step guide to build the report in the browser.
+- **`powerbi/`** has the DAX measures (spend, waste %, availability %, stockout days, approval time, value expiring) plus the relationships and the three report pages.
 
 ## Run it
 
