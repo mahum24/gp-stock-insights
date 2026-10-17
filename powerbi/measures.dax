@@ -1,0 +1,51 @@
+// GP Stock Insights - DAX measures. Create each with "New measure" (on FactMovement).
+
+// ---------- Money ----------
+Spend = SUM ( FactMovement[spend_gbp] )
+
+Waste Value = SUM ( FactMovement[waste_gbp] )
+
+Used Value = CALCULATE ( SUM ( FactMovement[value_gbp] ), FactMovement[movement_kind] = "used" )
+
+Waste % = DIVIDE ( [Waste Value], [Used Value] + [Waste Value] )
+
+Spend per Open Day = DIVIDE ( [Spend], CALCULATE ( COUNTROWS ( DimDate ), DimDate[is_open_day] = TRUE () ) )
+
+Expired Value = CALCULATE ( SUM ( FactMovement[waste_gbp] ), FactMovement[movement_kind] = "expired" )
+
+// ---------- Availability ----------
+Units Used = CALCULATE ( SUM ( FactMovement[quantity] ), FactMovement[movement_kind] = "used" )
+
+Stockout Days =
+CALCULATE (
+    COUNTROWS ( FactDailyStock ),
+    FactDailyStock[out_of_stock] = TRUE (),
+    DimDate[is_open_day] = TRUE ()
+)
+
+Items Out of Stock Today =
+VAR d = MAX ( DimDate[date] )
+RETURN CALCULATE ( COUNTROWS ( FactDailyStock ), FactDailyStock[out_of_stock] = TRUE (), DimDate[date] = d )
+
+Items Below Reorder Today =
+VAR d = MAX ( DimDate[date] )
+RETURN CALCULATE ( COUNTROWS ( FactDailyStock ), FactDailyStock[below_reorder] = TRUE (), DimDate[date] = d )
+
+Availability % =
+DIVIDE (
+    CALCULATE ( COUNTROWS ( FactDailyStock ), FactDailyStock[out_of_stock] = FALSE (), DimDate[is_open_day] = TRUE () ),
+    CALCULATE ( COUNTROWS ( FactDailyStock ), DimDate[is_open_day] = TRUE () )
+)
+
+// ---------- Ordering ----------
+Requests = COUNTROWS ( FactRequest )
+
+Average Hours to Approve = AVERAGE ( FactRequest[hours_to_review] )
+
+Average Days to Arrive = AVERAGE ( FactRequest[days_to_fulfil] )
+
+Urgent Request % = DIVIDE ( CALCULATE ( [Requests], FactRequest[priority] = "urgent" ), [Requests] )
+
+// ---------- Expiry watch ----------
+Value Expiring in 60 Days =
+CALCULATE ( SUM ( FactBatch[value_now_gbp] ), FactBatch[expiry_status] = "Expiring within 60 days" )
