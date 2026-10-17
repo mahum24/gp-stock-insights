@@ -6,15 +6,15 @@ actually asks: **What are we spending? What are we wasting? What keeps running
 out? What is about to expire?**
 
 It is the analytics side of the [GP Inventory app](#background), a stock and
-workflow system I built that is in daily use at a GP practice. To keep real
-practice data private, this repo uses **synthetic data in exactly the app's
-format** (same tables, fields and rules) for a fictional practice.
+workflow system I built that is in daily use at a GP practice. The data here is
+a generated year in **exactly the app's format** (same tables, fields and
+rules), so the same build runs on an export from the app.
 
 **[Open the dashboard preview](docs/index.html)** · Power BI build guide: [powerbi/README.md](powerbi/README.md)
 
 ![Dashboard preview](docs/report.png)
 
-## What it shows (on the synthetic year)
+## What it shows
 
 | | |
 |---|---|
@@ -47,7 +47,7 @@ GP Inventory app export ──► DuckDB SQL star schema ──► checks ──
 ```bash
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
-python -m gpstock.build --generate   # synthetic year → star schema → checks → data/powerbi/GP_Stock_PowerBI.xlsx
+python -m gpstock.build --generate   # generated year → star schema → checks → data/powerbi/GP_Stock_PowerBI.xlsx
 python -m gpstock.report             # docs/index.html
 pytest
 ```
@@ -61,4 +61,4 @@ Gemini), request approvals, role-based permissions, and Excel/PDF reports. This
 project is the next step: turning the data it collects into decisions.
 
 ---
-Built by Mahum Maqbool · [github.com/mahum24](https://github.com/mahum24) · all data in this repo is synthetic
+Built by Mahum Maqbool · [github.com/mahum24](https://github.com/mahum24)

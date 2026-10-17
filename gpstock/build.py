@@ -1,7 +1,7 @@
 """Load the exported tables, build the star schema, check it, and export it for Power BI.
 
     python -m gpstock.build              # uses data/source (run gpstock.generate first)
-    python -m gpstock.build --generate   # make fresh synthetic data first
+    python -m gpstock.build --generate   # make fresh data first
 """
 import argparse
 from pathlib import Path

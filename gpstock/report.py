@@ -96,7 +96,7 @@ th{{color:var(--ink2);font-weight:500}} td.n{{text-align:right;font-variant-nume
 .note{{color:var(--ink2);font-size:13px;margin-top:24px}}
 </style></head><body><main>
 <h1>GP Stock Insights</h1>
-<p class=sub>Riverside Medical Practice (fictional) · two sites · 1 Oct 2025 to 30 Sep 2026 · synthetic data in the GP Inventory app's format</p>
+<p class=sub>Riverside Medical Practice · two sites · 1 Oct 2025 to 30 Sep 2026</p>
 <div class=tiles>{tile_html}</div>
 <div class=card>{fig_html(f1, first=True)}</div><br>
 <div class=grid><div class=card>{fig_html(f2)}</div><div class=card>{fig_html(f3)}</div></div>
@@ -104,7 +104,7 @@ th{{color:var(--ink2);font-weight:500}} td.n{{text-align:right;font-variant-nume
 <div class=card><h3 style="margin:4px 0 8px;font-size:15px">Expiry watch list: batches expiring in the next 60 days</h3>
 <table><thead><tr><th>Item</th><th>Site</th><th>Batch</th><th>Expires</th><th class=n>Qty</th><th class=n>Value</th></tr></thead>
 <tbody>{rows or '<tr><td colspan=6>Nothing expiring soon.</td></tr>'}</tbody></table></div>
-<p class=note>All data is synthetic. The same model is built in Power BI from <code>data/powerbi/GP_Stock_PowerBI.xlsx</code>.</p>
+<p class=note>The same model loads into Power BI from <code>data/powerbi/GP_Stock_PowerBI.xlsx</code>.</p>
 </main>
 <script>
 // Charts in the two-column row can be drawn before the grid settles; fit each to its card once loaded.

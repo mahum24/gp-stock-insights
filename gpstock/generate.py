@@ -1,9 +1,8 @@
-"""Generate a year of realistic stock data for a fictional two-site GP practice.
+"""Generate a year of realistic stock data for a two-site GP practice.
 
 The tables have the same shape as the GP Inventory app's collections
 (sites, categories, items, site stock, movements, batches, requests, users),
-so the same analysis would run on a real export. All names and numbers here
-are made up.
+so the same analysis would run on a real export.
 
 How the year is simulated, day by day, for every item at every site:
   - Staff use stock. Demand depends on the weekday (closed Sundays, quiet
