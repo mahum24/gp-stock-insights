@@ -6,7 +6,7 @@ actually asks: **What are we spending? What are we wasting? What keeps running
 out? What is about to expire?**
 
 It is the analytics side of the [GP Inventory app](#background), a stock and
-workflow system I built that is in daily use at a GP practice. The data here is
+workflow system I built for a two-site GP practice. The data here is
 a generated year in **exactly the app's format** (same tables, fields and
 rules), so the same build runs on an export from the app.
 
@@ -54,11 +54,11 @@ pytest
 
 ## Background
 
-The GP Inventory app (React, Node.js, MongoDB) replaced the Excel sheets a GP
+The GP Inventory app (React, Node.js, MongoDB) was built to replace the Excel sheets a GP
 practice used for stock, requests and staff timesheets. It covers two sites,
 low-stock email alerts, batch and expiry tracking, AI receipt reading (Google
 Gemini), request approvals, role-based permissions, and Excel/PDF reports. This
-project is the next step: turning the data it collects into decisions.
+project is the next step: turning its data into decisions.
 
 ---
 Built by Mahum Maqbool · [github.com/mahum24](https://github.com/mahum24)
